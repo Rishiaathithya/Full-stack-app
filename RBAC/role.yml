@@ -2,8 +2,17 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: app-role
-  namespace: webapps
+  namespace: webapps  # Ensure it's in the right namespace
 rules:
+  - apiGroups: [""]
+    resources:
+      - services  # Ensure services are in the resources list
+    verbs:
+      - get
+      - list
+      - create
+      - update
+      - delete
   - apiGroups:
       - apps
       - autoscaling
@@ -32,14 +41,11 @@ rules:
       - replicasets
       - replicationcontrollers
       - serviceaccounts
-      - services
     verbs:
-      - "get"
-      - "list"
-      - "watch"
-      - "create"
-      - "update"
-      - "patch"
-      - "delete"
-
----
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
